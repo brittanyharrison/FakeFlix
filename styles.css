@@ -1,0 +1,140 @@
+:root{
+  --primary-color: #b159db;
+  --rbg-primary-color: rgb(177, 89, 219,0.6);
+  --primary-hover-color: #8844a8;
+  --card-image-overlay: linear-gradient(180deg, rgba(2,0,36,0) 16%, rgba(0,0,0,1) 100%)
+}
+a{
+  color: white;
+}
+
+
+.card:hover .card-img-overlay{
+  opacity: 1;
+  background: rgb(2,0,36);
+  background: var(--card-image-overlay);
+
+}
+.nav-link .active {
+  color: var(--primary-color);
+}
+
+.nav-link:hover, .dropdown-item:hover {
+  color: var(--primary-color);
+}
+
+.btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover-color);
+  border-color: var(--primary-hover-color);
+  box-shadow: 0 0 20px var(--rbg-primary-color);
+}
+.search-bar {
+display: flex;
+width: 50%;
+}
+
+.navbar-toggler{
+border: none;
+}
+
+.form-control:hover,.form-control:focus, .navbar-toggler:hover, .navbar-toggler:focus{
+background-color:#8484855a;
+box-shadow: 0 0 20px var(--rbg-primary-color);
+border:none;
+}
+.navbar-icon{
+font-size: 2.5rem;
+color: var(--primary-color)
+}
+
+.navbar-icon:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    transition: ease 0.5s;
+}
+
+.carousel-item {
+  position: relative;
+  overflow: visible;
+}
+.card{
+  display:flex;
+  object-fit: cover;
+}
+.card:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    transition: ease 0.5s;
+}
+
+.card-title { 
+    visibility: hidden; 
+    opacity: 0; 
+    transition: visibility 0s, opacity 0.5s;
+    font-size: 0.9rem; 
+  } 
+   
+  /* Show the text on hover */ 
+  .card:hover .card-title { 
+    visibility: visible; 
+    opacity: 1; 
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto; /* Center the container */
+    object-fit: fill;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100vh; /* Set a fixed height for the iframe */
+  
+}
+
+.video-container.fullscreen iframe {
+  height: 100vh; /* Make the iframe full height in fullscreen mode */
+}
+
+.episode-links a{
+  color: white;
+
+}
+
+.episode-links a:hover{
+  background-color: #b159db;
+}
+
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu .dropdown-item:active {
+  background-color: #b159db;
+
+}
+
+
+
+
+.footer, .footer a{
+  display: none;
+  padding: 0;
+}
+
+
+  @media (min-width: 992px){
+    .mobile-nav{
+      display: none;
+    }
+
+    .footer, .footer a{
+      display: flex;
+    }
+  }
