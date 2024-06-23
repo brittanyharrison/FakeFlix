@@ -1,3 +1,25 @@
+/*Google Font*/
+* {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1, h5, .nav-link {
+  color: var(--primary-color);
+}
+
+.nav-link:hover {
+  color: var(--primary-hover-color);
+}
+
+.navbar .nav-link {
+  font-size: 30px;
+  padding: 10px, 5px;
+  float:right;
+}
+
 :root{
   --primary-color: #b159db;
   --rbg-primary-color: rgb(177, 89, 219,0.6);
@@ -50,7 +72,7 @@ border:none;
 }
 .navbar-icon{
 font-size: 2.5rem;
-color: var(--primary-color)
+color: #8b27e2;
 }
 
 .navbar-icon:hover{
@@ -120,21 +142,39 @@ color: var(--primary-color)
 
 }
 
-
-
-
-.footer, .footer a{
-  display: none;
-  padding: 0;
+.mobile-nav{
+  display: block;
+  z-index: 1000;
 }
 
+h1 {
+  padding: 10px;
+}
+
+/**/
 
   @media (min-width: 992px){
     .mobile-nav{
       display: none;
+      position:fixed;
+    }
+
+   .footer, .footer a{
+      display: flex;
+    }
+
+  }
+
+  @media (max-width: 992px){
+    .mobile-nav{
+      position:fixed
     }
 
     .footer, .footer a{
       display: flex;
     }
+
+  body {
+    padding-bottom: 80px;
   }
+}

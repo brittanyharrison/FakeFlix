@@ -3,7 +3,7 @@ const BASE_URL='https://api.themoviedb.org/3'
 const IMG_URL='https://image.tmdb.org/t/p/original'
 const searchInput =  document.getElementById("search-input") 
 
-// Listner to call functions for certain pages
+// Listener to call functions for certain pages
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('index.html')) {
         featured();
@@ -283,7 +283,7 @@ async function getDetails() {
     const overview = item.overview || 'No overview available';
     const posterPath = item.backdrop_path ? `${IMG_URL}${item.backdrop_path}` : 'https://via.placeholder.com/500x750';
     const releaseDate = item.release_date || item.first_air_date;
-    const rating = Math.round(item.vote_average);
+    const rating = Math.round(item.vote_average * 10) / 10;
     const runtime = item.runtime || item.episode_run_time[0] || item.last_episode_to_air.runtime;
     const genres = item.genres.map(genre => genre.name).join(', ');
 
@@ -298,7 +298,7 @@ async function getDetails() {
             <p>${overview}</p>
             <p class="d-flex align-items-center"> 
                 <span class="align-middle"><i class="bi bi-star-fill" style="color: #b159db;"></i></span>
-                <span class="m-2 align-middle">${rating}</span>
+                <span class="m-2 align-middle">${rating}/10</span>
             </p>
             <button class="btn btn-primary" id="watchNowButton" onclick="window.location.href = '../pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
             <button class="btn btn-primary bg-dark d-none" id="add-to-watchlist">Add to Watchlist</button>
@@ -389,9 +389,76 @@ async function getGenres(){
 
 }
 
+//--------------------------Movies Page Codes by Sabby --------------------------//
+//Test Listened to call Movie page functions
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname.endsWith('movies.html')) {
+        trendingMovies()
+        upcomingMovies()
+        getPopularMovies()
+        getTopRatedMovies()
+    } else if (window.location.pathname.endsWith('watchlist.html')) {
+        displayWatchlist();
+        console.log('watchlist page')
+    } else if (window.location.pathname.endsWith('watch.html')){
+        getTrailer()
+    } else if (window.location.pathname.endsWith('get-details.html')){
+        getDetails()
+        console.log('on getdeatial')
+    }
+});
+
+// Fetch and display movies to display carousel - NOT DISPLAYING!
+async function trendingMovies(){
+    const result = await fetchData('/trending/movie/');
+
+    result.forEach(async (movie, index) => {
+        const id = movie.id;
+        const type = movie.media_type;
+        const title = movie.title || movie.name ;
+        const poster = movie.backdrop_path;
+        const logo =  await getLogo(type,id)
+
+        const nextSlide = index+1
+    
+        const carouselIndicator = `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : null} aria-label="Slide ${nextSlide}"></button>`
+        const carouselItem = `<div class="carousel-item position-relative ${index === 0 ? 'active' : null}">
+                                <img src="${logo}" class="position-absolute m-2" alt="${title}-poster" style="width: 10rem; height: auto;">
+                                <div class="position-absolute bottom-0 m-5 z-3">
+                                    <button class="btn btn-primary btn-lg" id="watchNowButton" onclick="window.location.href = '../pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
+                                    <button class="btn btn-outline-primary btn-lg bg-dark" onclick="window.location.href= '../pages/get-details.html?type=${type}&id=${id}';">Details</button>
+                                </div>
+                                <img src="${IMG_URL}${poster}" class="d-block w-100" alt="${title}-poster">
+                              </div>`
+                              
+        document.getElementById('indicators').innerHTML += carouselIndicator;
+        document.getElementById('trending-movies').innerHTML += carouselItem;
+    });
+}
+
+async function trendingMovies(){
+    const result = await fetchData('/trending/all/day');
+}
+
+//fetch and display Popular
+async function getPopularMovies() {
+    const result = await fetchData('/movie/popular'); 
+    displayData(result,'popular-movies','film');
+}
 
 
 
+//fetch and display Top Rated Movies
+async function getTopRatedMovies() {
+    const result = await fetchData('/movie/top_rated'); 
+    displayData(result,'top-rated-movies','film');
+}
+
+//fetch and display Upcoming Movies
+async function upcomingMovies() {
+    const result = await fetchData('/movie/upcoming'); 
+    displayData(result,'upcoming-movies','film');
+}
 
 
 
