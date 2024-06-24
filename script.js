@@ -390,6 +390,7 @@ async function getGenres(){
 }
 
 //--------------------------Movies Page Codes --------------------------//
+
 //Test Listened to call Movie page functions
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('movies.html')) {
@@ -415,19 +416,19 @@ async function trendingMovies(){
 //fetch and display Popular
 async function getPopularMovies() {
     const result = await fetchData('/movie/popular'); 
-    displayData(result,'popular-movies','film');
+    displayData(result,'popular-movies','movie');
 }
 
 //fetch and display Top Rated Movies
 async function getTopRatedMovies() {
     const result = await fetchData('/movie/top_rated'); 
-    displayData(result,'top-rated-movies','film');
+    displayData(result,'top-rated-movies','movie');
 }
 
 //fetch and display Upcoming Movies
 async function upcomingMovies() {
     const result = await fetchData('/movie/upcoming'); 
-    displayData(result,'upcoming-movies','film');
+    displayData(result,'upcoming-movies','movie');
 }
 
 //--------------------------TV Shows Page Codes --------------------------//
