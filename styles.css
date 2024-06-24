@@ -30,12 +30,10 @@ a{
   color: white;
 }
 
-
 .card:hover .card-img-overlay{
   opacity: 1;
   background: rgb(2,0,36);
   background: var(--card-image-overlay);
-
 }
 .nav-link .active {
   color: var(--primary-color);
@@ -70,6 +68,7 @@ background-color:#8484855a;
 box-shadow: 0 0 20px var(--rbg-primary-color);
 border:none;
 }
+
 .navbar-icon{
 font-size: 2.5rem;
 color: #8b27e2;
@@ -85,10 +84,12 @@ color: #8b27e2;
   position: relative;
   overflow: visible;
 }
+
 .card{
   display:flex;
   object-fit: cover;
 }
+
 .card:hover{
     transform: scale(1.1);
     cursor: pointer;
@@ -129,7 +130,6 @@ color: #8b27e2;
 
 .episode-links a{
   color: white;
-
 }
 
 .episode-links a:hover{
@@ -139,7 +139,6 @@ color: #8b27e2;
 .dropdown-menu .dropdown-item.active,
 .dropdown-menu .dropdown-item:active {
   background-color: #b159db;
-
 }
 
 .mobile-nav{
@@ -150,6 +149,13 @@ color: #8b27e2;
 h1 {
   padding: 10px;
 }
+
+/* works to reduce carousel but cuts off the bottom part of the image*/
+  .carousel-item {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden; 
+  }
 
 /**/
 
@@ -162,13 +168,13 @@ h1 {
    .footer, .footer a{
       display: flex;
     }
-
   }
 
   @media (max-width: 992px){
     .mobile-nav{
       position:fixed
     }
+    
 
     .footer, .footer a{
       display: flex;
