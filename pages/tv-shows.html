@@ -1,56 +1,226 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles.css">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TV Shows</title>
+
     <!--Google Font-->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     
-</head>
-<body>
+    <!--Bootstrap CDN-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!--Bootstrap Icons CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Swiper CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="icon" href="../assets/icon.png"/>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="../index.html">
-            <img src="../assets/fakeflix-logo.png" alt="fakeflix-logo" width="150"> 
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary position-sticky">
+      <div class="container-fluid d-flex">
+        <a class="navbar-brand" href="../index.html">
+          <img src="../assets/fakeflix-logo.png" alt="fakeflix-logo" width="150"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav justify-content-center w-100">
+            <li class="nav-item d-none d-lg-block">
+              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item d-none d-lg-block">
+              <a class="nav-link" href="../pages/movies.html">Movies</a>
+            </li>
+            <li class="nav-item d-none d-lg-block">
+              <a class="nav-link active" href="../pages/tv-shows.html">TV Shows</a>
+            </li>
+            <li class="nav-item d-none d-lg-block">
+              <a class="nav-link" href="../pages/watchlist.html">Watchlist</a>
+            </li>
+            <li class="nav-item d-lg-none">
+              <a class="nav-link" href="#">Contact us</a>
+            </li>
+            <li class="nav-item d-lg-none">
+              <a class="nav-link" href="#">Help Center</a>
+            </li>
+            <li class="nav-item d-lg-none">
+              <a class="nav-link" href="#">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <!--Mobile nav-->
+    <nav class="navbar fixed-bottom bg-body-tertiary mobile-nav">
+      <div class="container-fluid">
+        <a class="navbar-brand navbar-icon" href="../index.html">
+          <i class="bi bi-house-fill""></i>
+        </a>
+        <a class="navbar-brand navbar-icon" href="../pages/movies.html">
+          <i class="bi bi-film"></i>
+        </a>
+        <a class="navbar-brand navbar-icon" href="../pages/tv-shows.html">
+          <i class="bi bi-tv-fill" style="color: white;"></i>
+        </a>
+        <a class="navbar-brand navbar-icon" href="../pages/watchlist.html">
+          <i class="bi bi-plus-square-fill"></i>
+        </a>
+      </div>
+    </nav>
+    <!--Search Bar-->
+    <form role="search" class="d-flex justify-content-center m-3" data-search>
+      <input type="search" placeholder="Search" class="form-control w-75" id="search-input">
+    </form>
+    <div class="row" id="searchResults"></div>
+
+    <!--main-body-->
+    <div id="main-body">
+
+      <!--Airing Today-->
+      <div class="swiper">
+        <h1 class="heading">Airing Today</h1>
+        <div class="d-flex ms-4 swiper-wrapper" id="airing-today-tv">
+        </div>
+      </div>
+
+    <!--On The Air-->
+      <div class="swiper">
+      <h1 class="heading">On The Air</h1>
+      <div class="d-flex ms-4 swiper-wrapper" id="on-the-air-tv">
+      </div>
+    </div>
+      
+      <!--Popular TV Sows-->
+      <div class="swiper">
+        <h1 class="heading">Popular TV Shows</h1>
+        <div class="d-flex ms-4 swiper-wrapper" id="popular-tv">
+        </div>
+      </div>
+
+      <!--Top Rated TV Shows-->
+      <div class="swiper">
+        <h1 class="heading">Top Rated TV Shows</h1>
+        <div class="d-flex ms-4 swiper-wrapper" id="top-rated-tv">
+        </div>
+      </div>
+
+    </div>
+    
+    <!--Footer-->
+    <nav class="footer position-relative bottom-0 m-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-2">
+            <h5>Company</h5>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                <a href="#" class="nav-link">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../pages/movies.html">Movies</a>
+                <a href="#" class="nav-link">Careers</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../pages/tv-shows.html">TV Shows</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Genres
-                </a>
-                <ul class="dropdown-menu" id="genre-list">
-                  
-                </ul>
+                <a href="#" class="nav-link">Contact Us</a>
               </li>
             </ul>
           </div>
+          <div class="col-2">
+            <h5>Support</h5>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a href="#" class="nav-link">FAQ</a>
+              </li>
+              <li class="nav-item p-0">
+                <a href="#" class="nav-link">Help Desk</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Forums</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-2">
+            <h5>Legal</h5>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a href="#" class="nav-link">Terms of Service</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Privacy Policy</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Cookie Policy</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <h5>Connect</h5>
+            <ul class="d-flex list-unstyled justify-content-evenly">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <img src="/assets/facebook-icon.svg" alt="Facebook" width="40">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <img src="/assets/twitter-icon.svg" alt="Twitter" width="40">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <img src="/assets/instagram-icon.svg" alt="Instagram" width="40">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <img src="/assets/youtube-icon.svg" alt="YouTube" width="40">
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 mt-3 d-flex justify-content-end">
+            <p>&copy; 2021 Fakeflix. All Rights Reserved</p>
+          </div>
         </div>
-      </nav>
-    <!--Mobile nav-->
-    <!--Movie preview-->
-    <!--Trending-->
-   <div class="d-flex" id="trending-all"></div>
-    <!--Top Rated-->
-    <!--Footer-->
-    <script src="../script.js"></script>
+      </div>
+    </nav>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    
+    <!-- SWIPER JS -->
+    <script type="module">
+      import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
+      const swiperEl = document.querySelector("swiper-container");
+      const buttonEl = document.querySelector("button");
+
+      buttonEl.addEventListener("click", () => {
+        swiperEl.swiper.slideNext();
+      });
+      const swiper = new Swiper(".swiper", {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        slidesPerGroup: 1,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+    <script src="../script.js"></script>
+  </body>
 </html>

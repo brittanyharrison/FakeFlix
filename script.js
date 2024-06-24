@@ -389,7 +389,7 @@ async function getGenres(){
 
 }
 
-//--------------------------Movies Page Codes by Sabby --------------------------//
+//--------------------------Movies Page Codes --------------------------//
 //Test Listened to call Movie page functions
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('movies.html')) {
@@ -428,6 +428,49 @@ async function getTopRatedMovies() {
 async function upcomingMovies() {
     const result = await fetchData('/movie/upcoming'); 
     displayData(result,'upcoming-movies','film');
+}
+
+//--------------------------TV Shows Page Codes --------------------------//
+//Test Listened to call Tv show page functions
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname.endsWith('tv-shows.html')) {
+        airingToday()
+        onTheAir()
+        getPopularTv()
+        getTopRatedTv()
+    } else if (window.location.pathname.endsWith('watchlist.html')) {
+        displayWatchlist();
+        console.log('watchlist page')
+    } else if (window.location.pathname.endsWith('watch.html')){
+        getTrailer()
+    } else if (window.location.pathname.endsWith('get-details.html')){
+        getDetails()
+        console.log('on getdeatial')
+    }
+});
+
+//fetch and display Airing Today
+async function airingToday(){
+    const result = await fetchData('/tv/airing_today'); 
+    displayData(result,'airing-today-tv','tv');
+}
+
+//fetch and display On The Air
+async function onTheAir(){
+    const result = await fetchData('/tv/on_the_air'); 
+    displayData(result,'on-the-air-tv','tv');
+}
+
+//fetch and display Popular TV Shows
+async function getPopularTv() {
+    const result = await fetchData('/tv/popular'); 
+    displayData(result,'popular-tv','tv');
+}
+
+//fetch and display Top Rated TV Shows
+async function getTopRatedTv() {
+    const result = await fetchData('/tv/top_rated'); 
+    displayData(result,'top-rated-tv','tv');
 }
 
 
