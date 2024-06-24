@@ -393,7 +393,6 @@ async function getGenres(){
 //Test Listened to call Movie page functions
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('movies.html')) {
-        trendingMovies()
         upcomingMovies()
         getPopularMovies()
         getTopRatedMovies()
@@ -408,33 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Fetch and display movies to display carousel - NOT DISPLAYING!
-async function trendingMovies(){
-    const result = await fetchData('/trending/movie/');
-
-    result.forEach(async (movie, index) => {
-        const id = movie.id;
-        const type = movie.media_type;
-        const title = movie.title || movie.name ;
-        const poster = movie.backdrop_path;
-        const logo =  await getLogo(type,id)
-
-        const nextSlide = index+1
-    
-        const carouselIndicator = `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : null} aria-label="Slide ${nextSlide}"></button>`
-        const carouselItem = `<div class="carousel-item position-relative ${index === 0 ? 'active' : null}">
-                                <img src="${logo}" class="position-absolute m-2" alt="${title}-poster" style="width: 10rem; height: auto;">
-                                <div class="position-absolute bottom-0 m-5 z-3">
-                                    <button class="btn btn-primary btn-lg" id="watchNowButton" onclick="window.location.href = '../pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
-                                    <button class="btn btn-outline-primary btn-lg bg-dark" onclick="window.location.href= '../pages/get-details.html?type=${type}&id=${id}';">Details</button>
-                                </div>
-                                <img src="${IMG_URL}${poster}" class="d-block w-100" alt="${title}-poster">
-                              </div>`
-                              
-        document.getElementById('indicators').innerHTML += carouselIndicator;
-        document.getElementById('trending-movies').innerHTML += carouselItem;
-    });
-}
 
 async function trendingMovies(){
     const result = await fetchData('/trending/all/day');
@@ -445,8 +417,6 @@ async function getPopularMovies() {
     const result = await fetchData('/movie/popular'); 
     displayData(result,'popular-movies','film');
 }
-
-
 
 //fetch and display Top Rated Movies
 async function getTopRatedMovies() {
@@ -459,7 +429,6 @@ async function upcomingMovies() {
     const result = await fetchData('/movie/upcoming'); 
     displayData(result,'upcoming-movies','film');
 }
-
 
 
 
