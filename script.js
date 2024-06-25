@@ -1,6 +1,6 @@
 const API_KEY='4b50fd6e468f284fd0466f123de95dc7'
 const BASE_URL='https://api.themoviedb.org/3'
-const IMG_URL='https://image.tmdb.org/t/p/original'
+const IMG_URL='https://image.tmdb.org/t/p/original/'
 const searchInput =  document.getElementById("search-input") 
 
 // Listener to call functions for certain pages
@@ -19,7 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (window.location.pathname.endsWith('get-details.html')){
         getDetails()
         console.log('on getdeatial')
-    }
+    } else if (window.location.pathname.endsWith('movies.html')) {
+        upcomingMovies()
+        getPopularMovies()
+        getTopRatedMovies()
+        getMovieGenres()
+    }else if (window.location.pathname.endsWith('tv-shows.html')) {
+        airingToday()
+        onTheAir()
+        getPopularTv()
+        getTopRatedTv()
+    } 
 });
 
 
@@ -55,13 +65,13 @@ async function displayData(results,containerId,mediaType) {
         const type = item.media_type ? item.media_type : mediaType
         const id = item.id;
         const title = item.title || item.name;
-        const posterPath = item.backdrop_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
+        const posterPath = item.poster_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
 
         
   
         const movieElement = `
         <div class="card text-bg-dark col-4 swiper-slide">
-              <a href="./pages/get-details.html?type=${type}&id=${id}">
+              <a href="../pages/get-details.html?type=${type}&id=${id}">
                   <img src="${posterPath}" class="card-img" alt="poster" >
                   <div class="card-img-overlay position-absolute right-0">
                       <h5 class="card-title text-wrap position-absolute bottom-0 mb-3">${title}</h5>
@@ -365,16 +375,28 @@ async function getDetails() {
 }
 
 
-
-
-
-
-
-
-
 // Get the list Genre options for filter
-async function getGenres(){
+async function getMovieGenres(){
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
+    const data = await response.json();
+    
+    data.genres.forEach(genre => {
+        const name = genre.name;
+        const id = genre.id;
+        const type = 'movie'
+
+
+        const genreElement = `
+        <li><a class="dropdown-item" href="#" onclick="displayGenre(${id},'${name}','${type}')">${name}</a></li>
+        `;
+
+        document.getElementById('movie-genres').innerHTML += genreElement;
+    });
+
+}
+
+async function getTVGenres(){
+    const response = await fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}`);
     const data = await response.json();
     
     data.genres.forEach(genre => {
@@ -389,28 +411,44 @@ async function getGenres(){
 
 }
 
-//--------------------------Movies Page Codes --------------------------//
+async function displayGenre(genreId,genreName,mediaType){
+    const mainBody = document.getElementById('main-body');
+    mainBody.innerHTML = ''; 
+    const container = document.getElementById('genre-results')
+    container.innerHTML = `<h2>${genreName}</h2>`
 
-//Test Listened to call Movie page functions
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.endsWith('movies.html')) {
-        upcomingMovies()
-        getPopularMovies()
-        getTopRatedMovies()
-    } else if (window.location.pathname.endsWith('watchlist.html')) {
-        displayWatchlist();
-        console.log('watchlist page')
-    } else if (window.location.pathname.endsWith('watch.html')){
-        getTrailer()
-    } else if (window.location.pathname.endsWith('get-details.html')){
-        getDetails()
-        console.log('on getdeatial')
-    }
-});
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&page=1&sort_by=popularity.desc&with_genres=${genreId}`);
+    const data = await response.json();
+    
+    data.results.forEach(item => {
+        const type = mediaType;
+        const id = item.id;
+        const title = item.title || item.name;
+        const poster = item.poster_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
+        
+        const card = `
+        <div class="col-sm-6 col-md-3 mb-4">
+            <div class="card text-bg-dark">
+                <a href="../pages/get-details.html?type=${type}&id=${id}">
+                    <img src="${poster}" class="card-img" alt="poster">
+                    <div class="card-img-overlay position-absolute right-0">
+                        <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        `
+        container.innerHTML += card
+    })
+
+
+    
+
+}
 
 
 async function trendingMovies(){
-    const result = await fetchData('/trending/all/day');
+    const result = await fetchData('/trending/movie/day');
 }
 
 //fetch and display Popular
@@ -431,24 +469,6 @@ async function upcomingMovies() {
     displayData(result,'upcoming-movies','movie');
 }
 
-//--------------------------TV Shows Page Codes --------------------------//
-//Test Listened to call Tv show page functions
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.endsWith('tv-shows.html')) {
-        airingToday()
-        onTheAir()
-        getPopularTv()
-        getTopRatedTv()
-    } else if (window.location.pathname.endsWith('watchlist.html')) {
-        displayWatchlist();
-        console.log('watchlist page')
-    } else if (window.location.pathname.endsWith('watch.html')){
-        getTrailer()
-    } else if (window.location.pathname.endsWith('get-details.html')){
-        getDetails()
-        console.log('on getdeatial')
-    }
-});
 
 //fetch and display Airing Today
 async function airingToday(){
@@ -472,16 +492,6 @@ async function getPopularTv() {
 async function getTopRatedTv() {
     const result = await fetchData('/tv/top_rated'); 
     displayData(result,'top-rated-tv','tv');
+
 }
-
-
-
-
-
-
-
-
-
-
-
 

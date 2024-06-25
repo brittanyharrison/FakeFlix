@@ -67,7 +67,7 @@
     <nav class="navbar fixed-bottom bg-body-tertiary mobile-nav">
       <div class="container-fluid">
         <a class="navbar-brand navbar-icon" href="../index.html">
-          <i class="bi bi-house-fill""></i>
+          <i class="bi bi-house-fill"></i>
         </a>
         <a class="navbar-brand navbar-icon" href="../pages/movies.html">
           <i class="bi bi-film" style="color: white;"></i>
@@ -83,8 +83,17 @@
     <!--Search Bar-->
     <form role="search" class="d-flex justify-content-center m-3" data-search>
       <input type="search" placeholder="Search" class="form-control w-75" id="search-input">
+      <div class="dropdown-center ms-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Genres
+        </button>
+        <ul class="dropdown-menu" id="movie-genres">
+        </ul>
+      </div>
     </form>
     <div class="row" id="searchResults"></div>
+    <!--Genre Results-->
+    <div class="row" id="genre-results"></div>
 
     <!--main-body-->
     <div id="main-body">
