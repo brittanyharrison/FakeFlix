@@ -24,7 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
         getPopularMovies()
         getTopRatedMovies()
         getMovieGenres()
-    }
+    }else if (window.location.pathname.endsWith('tv-shows.html')) {
+        airingToday()
+        onTheAir()
+        getPopularTv()
+        getTopRatedTv()
+    } 
 });
 
 
@@ -406,18 +411,6 @@ async function getTVGenres(){
 
 }
 
-async function fetchMoviesByCategory(endpoint,genreId){
-    try{
-        const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&page=1&${endpoint}&with_genres=${genreId}`);
-        const data = await response.json();
-        return data.results;
-    }catch(error){
-        console.log('no data found',error);
-    }
-    
-    
-}
-
 async function displayGenre(genreId,genreName,mediaType){
     const mainBody = document.getElementById('main-body');
     mainBody.innerHTML = ''; 
@@ -453,52 +446,6 @@ async function displayGenre(genreId,genreName,mediaType){
 
 }
 
-/* async function displayMoviesByGenre(genreId){
-    const mainBody = document.getElementById('main-body');
-    mainBody.innerHTML = ''; 
-
-    const categories = [
-        { name: 'Popular', endpoint: 'sort_by=popularity.desc' },
-        { name: 'Top Rated', endpoint: 'sort_by=vote_average.desc' },
-        { name: 'Upcoming', endpoint: `primary_release_date.gte=${new Date().toISOString().split('T')[0]}&sort_by=primary_release_date.asc` }
-    ];
-
-    for (const category of categories) {
-        const movies = await fetchMoviesByCategory(category.endpoint, genreId);
-
-        const categoryElement = document.createElement('div');
-        categoryElement.classList.add(`swiper`);
-        categoryElement.innerHTML = `<h2>${category.name}</h2>`
-        
-
-
-        movies.forEach(movie => {
-            const movieElement = document.createElement('div');
-            
-            const id = movie.id
-            const title = movie.title || movie.name;
-            const type = movie.media_type;
-            const poster = movie.poster_path ? `${IMG_URL}${movie.poster_path}` : 'https://via.placeholder.com/500x750';
-
-            movieElement.innerHTML = `
-                <div class="col-sm-6 col-md-3 mb-4">
-                    <div class="card border-0">
-                        <a href="../pages/get-details.html?type=movie&id=${id}">
-                            <img src="${poster}" class="card-img" alt="poster">
-                            <div class="card-img-overlay position-absolute right-0">
-                                <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            `;
-            categoryElement.appendChild(movieElement);
-        });
-
-        mainBody.appendChild(categoryElement);
-    }
-} */
-
 
 async function trendingMovies(){
     const result = await fetchData('/trending/movie/day');
@@ -523,13 +470,28 @@ async function upcomingMovies() {
 }
 
 
+//fetch and display Airing Today
+async function airingToday(){
+    const result = await fetchData('/tv/airing_today'); 
+    displayData(result,'airing-today-tv','tv');
+}
 
+//fetch and display On The Air
+async function onTheAir(){
+    const result = await fetchData('/tv/on_the_air'); 
+    displayData(result,'on-the-air-tv','tv');
+}
 
+//fetch and display Popular TV Shows
+async function getPopularTv() {
+    const result = await fetchData('/tv/popular'); 
+    displayData(result,'popular-tv','tv');
+}
 
+//fetch and display Top Rated TV Shows
+async function getTopRatedTv() {
+    const result = await fetchData('/tv/top_rated'); 
+    displayData(result,'top-rated-tv','tv');
 
-
-
-
-
-
+}
 
