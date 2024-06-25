@@ -149,6 +149,7 @@ h1 {
   padding: 10px;
 }
 
+
 /* works to reduce carousel but cuts off the bottom part of the image*/
   .carousel-item {
     width: 100%;
@@ -176,7 +177,7 @@ h1 {
     
 
     .footer, .footer a{
-      display: flex;
+      display: none;
     }
 
   body {
