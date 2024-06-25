@@ -5,12 +5,13 @@ const searchInput =  document.getElementById("search-input")
 
 // Listener to call functions for certain pages
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.endsWith('index.html')) {
+    // Execute these functions on the homepage (index.html)
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
         featured();
-        getGenreContent(10764,'reality-tv','tv')
-        getGenreContent(16,'animation-movie','movie')
-        getTrendingAll()
-        getTopRatedTv()
+        getGenreContent(10764, 'reality-tv', 'tv');
+        getGenreContent(16, 'animation-movie', 'movie');
+        getTrendingAll();
+        getTopRatedTv();
     } else if (window.location.pathname.endsWith('watchlist.html')) {
         displayWatchlist();
         console.log('watchlist page')
