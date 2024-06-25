@@ -1,6 +1,6 @@
 const API_KEY='4b50fd6e468f284fd0466f123de95dc7'
 const BASE_URL='https://api.themoviedb.org/3'
-const IMG_URL='https://image.tmdb.org/t/p/original'
+const IMG_URL='https://image.tmdb.org/t/p/original/'
 const searchInput =  document.getElementById("search-input") 
 
 // Listener to call functions for certain pages
@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (window.location.pathname.endsWith('get-details.html')){
         getDetails()
         console.log('on getdeatial')
+    } else if (window.location.pathname.endsWith('movies.html')) {
+        upcomingMovies()
+        getPopularMovies()
+        getTopRatedMovies()
+        getMovieGenres()
     }
 });
 
@@ -55,13 +60,13 @@ async function displayData(results,containerId,mediaType) {
         const type = item.media_type ? item.media_type : mediaType
         const id = item.id;
         const title = item.title || item.name;
-        const posterPath = item.backdrop_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
+        const posterPath = item.poster_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
 
         
   
         const movieElement = `
         <div class="card text-bg-dark col-4 swiper-slide">
-              <a href="./pages/get-details.html?type=${type}&id=${id}">
+              <a href="../pages/get-details.html?type=${type}&id=${id}">
                   <img src="${posterPath}" class="card-img" alt="poster" >
                   <div class="card-img-overlay position-absolute right-0">
                       <h5 class="card-title text-wrap position-absolute bottom-0 mb-3">${title}</h5>
@@ -365,16 +370,28 @@ async function getDetails() {
 }
 
 
-
-
-
-
-
-
-
 // Get the list Genre options for filter
-async function getGenres(){
+async function getMovieGenres(){
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
+    const data = await response.json();
+    
+    data.genres.forEach(genre => {
+        const name = genre.name;
+        const id = genre.id;
+        const type = 'movie'
+
+
+        const genreElement = `
+        <li><a class="dropdown-item" href="#" onclick="displayGenre(${id},'${name}','${type}')">${name}</a></li>
+        `;
+
+        document.getElementById('movie-genres').innerHTML += genreElement;
+    });
+
+}
+
+async function getTVGenres(){
+    const response = await fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}`);
     const data = await response.json();
     
     data.genres.forEach(genre => {
@@ -389,45 +406,120 @@ async function getGenres(){
 
 }
 
-//--------------------------Movies Page Codes by Sabby --------------------------//
-//Test Listened to call Movie page functions
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.endsWith('movies.html')) {
-        upcomingMovies()
-        getPopularMovies()
-        getTopRatedMovies()
-    } else if (window.location.pathname.endsWith('watchlist.html')) {
-        displayWatchlist();
-        console.log('watchlist page')
-    } else if (window.location.pathname.endsWith('watch.html')){
-        getTrailer()
-    } else if (window.location.pathname.endsWith('get-details.html')){
-        getDetails()
-        console.log('on getdeatial')
+async function fetchMoviesByCategory(endpoint,genreId){
+    try{
+        const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&page=1&${endpoint}&with_genres=${genreId}`);
+        const data = await response.json();
+        return data.results;
+    }catch(error){
+        console.log('no data found',error);
     }
-});
+    
+    
+}
+
+async function displayGenre(genreId,genreName,mediaType){
+    const mainBody = document.getElementById('main-body');
+    mainBody.innerHTML = ''; 
+    const container = document.getElementById('genre-results')
+    container.innerHTML = `<h2>${genreName}</h2>`
+
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&page=1&sort_by=popularity.desc&with_genres=${genreId}`);
+    const data = await response.json();
+    
+    data.results.forEach(item => {
+        const type = mediaType;
+        const id = item.id;
+        const title = item.title || item.name;
+        const poster = item.poster_path ? `${IMG_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750';
+        
+        const card = `
+        <div class="col-sm-6 col-md-3 mb-4">
+            <div class="card text-bg-dark">
+                <a href="../pages/get-details.html?type=${type}&id=${id}">
+                    <img src="${poster}" class="card-img" alt="poster">
+                    <div class="card-img-overlay position-absolute right-0">
+                        <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        `
+        container.innerHTML += card
+    })
+
+
+    
+
+}
+
+/* async function displayMoviesByGenre(genreId){
+    const mainBody = document.getElementById('main-body');
+    mainBody.innerHTML = ''; 
+
+    const categories = [
+        { name: 'Popular', endpoint: 'sort_by=popularity.desc' },
+        { name: 'Top Rated', endpoint: 'sort_by=vote_average.desc' },
+        { name: 'Upcoming', endpoint: `primary_release_date.gte=${new Date().toISOString().split('T')[0]}&sort_by=primary_release_date.asc` }
+    ];
+
+    for (const category of categories) {
+        const movies = await fetchMoviesByCategory(category.endpoint, genreId);
+
+        const categoryElement = document.createElement('div');
+        categoryElement.classList.add(`swiper`);
+        categoryElement.innerHTML = `<h2>${category.name}</h2>`
+        
+
+
+        movies.forEach(movie => {
+            const movieElement = document.createElement('div');
+            
+            const id = movie.id
+            const title = movie.title || movie.name;
+            const type = movie.media_type;
+            const poster = movie.poster_path ? `${IMG_URL}${movie.poster_path}` : 'https://via.placeholder.com/500x750';
+
+            movieElement.innerHTML = `
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="card border-0">
+                        <a href="../pages/get-details.html?type=movie&id=${id}">
+                            <img src="${poster}" class="card-img" alt="poster">
+                            <div class="card-img-overlay position-absolute right-0">
+                                <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            `;
+            categoryElement.appendChild(movieElement);
+        });
+
+        mainBody.appendChild(categoryElement);
+    }
+} */
 
 
 async function trendingMovies(){
-    const result = await fetchData('/trending/all/day');
+    const result = await fetchData('/trending/movie/day');
 }
 
 //fetch and display Popular
 async function getPopularMovies() {
     const result = await fetchData('/movie/popular'); 
-    displayData(result,'popular-movies','film');
+    displayData(result,'popular-movies','movie');
 }
 
 //fetch and display Top Rated Movies
 async function getTopRatedMovies() {
     const result = await fetchData('/movie/top_rated'); 
-    displayData(result,'top-rated-movies','film');
+    displayData(result,'top-rated-movies','movie');
 }
 
 //fetch and display Upcoming Movies
 async function upcomingMovies() {
     const result = await fetchData('/movie/upcoming'); 
-    displayData(result,'upcoming-movies','film');
+    displayData(result,'upcoming-movies','movie');
 }
 
 

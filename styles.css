@@ -10,10 +10,6 @@ h1, h5, .nav-link {
   color: var(--primary-color);
 }
 
-.nav-link:hover {
-  color: var(--primary-hover-color);
-}
-
 .navbar .nav-link {
   font-size: 30px;
   padding: 10px, 5px;
@@ -40,7 +36,7 @@ a{
 }
 
 .nav-link:hover, .dropdown-item:hover {
-  color: var(--primary-color);
+  color: white;
 }
 
 .btn {
@@ -85,10 +81,6 @@ color: #8b27e2;
   overflow: visible;
 }
 
-.card{
-  display:flex;
-  object-fit: cover;
-}
 
 .card:hover{
     transform: scale(1.1);
@@ -102,6 +94,13 @@ color: #8b27e2;
     transition: visibility 0s, opacity 0.5s;
     font-size: 0.9rem; 
   } 
+
+  .card-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the entire card area */
+}
+
    
   /* Show the text on hover */ 
   .card:hover .card-title { 
