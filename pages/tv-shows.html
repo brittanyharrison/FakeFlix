@@ -83,8 +83,18 @@
     <!--Search Bar-->
     <form role="search" class="d-flex justify-content-center m-3" data-search>
       <input type="search" placeholder="Search" class="form-control w-75" id="search-input">
+      <div class="dropdown-center ms-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Genres
+        </button>
+        <ul class="dropdown-menu" id="tv-genres">
+        </ul>
+      </div>
     </form>
     <div class="row" id="searchResults"></div>
+
+    <!--Genre Results-->
+    <div class="row" id="genre-results"></div>
 
     <!--main-body-->
     <div id="main-body">

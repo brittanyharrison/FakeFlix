@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         onTheAir()
         getPopularTv()
         getTopRatedTv()
+        getTVGenres()
     } 
 });
 
@@ -401,12 +402,15 @@ async function getTVGenres(){
     
     data.genres.forEach(genre => {
         const name = genre.name;
+        const id = genre.id;
+        const type = 'tv'
+
 
         const genreElement = `
-        <li><a class="dropdown-item" href="../pages/genres.html">${name}</a></li>
+        <li><a class="dropdown-item" href="#" onclick="displayGenre(${id},'${name}','${type}')">${name}</a></li>
         `;
 
-        document.getElementById('genre-list').innerHTML += genreElement;
+        document.getElementById('tv-genres').innerHTML += genreElement;
     });
 
 }
@@ -417,7 +421,7 @@ async function displayGenre(genreId,genreName,mediaType){
     const container = document.getElementById('genre-results')
     container.innerHTML = `<h2>${genreName}</h2>`
 
-    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&page=1&sort_by=popularity.desc&with_genres=${genreId}`);
+    const response = await fetch(`${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&page=1&sort_by=popularity.desc&with_genres=${genreId}`);
     const data = await response.json();
     
     data.results.forEach(item => {
