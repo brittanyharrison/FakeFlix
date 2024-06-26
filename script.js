@@ -187,6 +187,7 @@ async function featured(){
 
 function updateWatchlist(action, media) {
     let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    console.log("mediaid",media.id)
     if (action === 'add') {
         if (!watchlist.some(item => item.id === media.id)) {
             watchlist.push(media);
@@ -214,7 +215,7 @@ function displayWatchlist() {
             const card = `
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card text-bg-dark">
-                <a href=/pages/get-details.html?type=${movie.type}&id=${movie.id}">
+                <a href=/pages/get-details.html?type=${movie.type}&id=${movie.id}>
                     <img src="${movie.posterPath}" class="card-img" alt="poster">
                     <div class="card-img-overlay position-absolute right-0">
                         <h5 class="card-title text-wrap position-absolute bottom-0">${movie.title}</h5>
@@ -323,6 +324,7 @@ async function getDetails() {
 
     // Check if the item is in the watchlist
     const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    console.log(watchlist)
     const isInWatchlist = watchlist.some(movie => movie.id === id);
 
     // Show the correct button based on watchlist status
