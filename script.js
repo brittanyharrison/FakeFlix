@@ -6,7 +6,7 @@ const searchInput =  document.getElementById("search-input")
 // Listener to call functions for certain pages
 document.addEventListener('DOMContentLoaded', () => {
     // Execute these functions on the homepage (index.html)
-    if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+    if (window.location.pathname.endsWith('/')  || window.location.pathname.endsWith('index.html')) {
         featured();
         getGenreContent(10764, 'reality-tv', 'tv');
         getGenreContent(16, 'animation-movie', 'movie');
