@@ -73,7 +73,7 @@ async function displayData(results,containerId,mediaType) {
   
         const movieElement = `
         <div class="card text-bg-dark col-4 swiper-slide">
-              <a href="/pages/get-details.html?type=${type}&id=${id}">
+              <a href="../pages/get-details.html?type=${type}&id=${id}">
                   <img src="${posterPath}" class="card-img" alt="poster" >
                   <div class="card-img-overlay position-absolute right-0">
                       <h5 class="card-title text-wrap position-absolute bottom-0 mb-3">${title}</h5>
@@ -118,7 +118,7 @@ searchInput.addEventListener('input', async (e) => {
         const card = `
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card text-bg-dark">
-                <a href="/pages/get-details.html?type=${type}&id=${id}">
+                <a href="../pages/get-details.html?type=${type}&id=${id}">
                     <img src="${poster}" class="card-img" alt="poster">
                     <div class="card-img-overlay position-absolute right-0">
                         <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
@@ -173,8 +173,8 @@ async function featured(){
         const carouselItem = `<div class="carousel-item position-relative ${index === 0 ? 'active' : null}">
                                 <img src="${logo}" class="position-absolute m-2" alt="${title}-poster" style="width: 10rem; height: auto;">
                                 <div class="position-absolute bottom-0 m-5 z-3">
-                                    <button class="btn btn-primary btn-lg" id="watchNowButton" onclick="window.location.href = '/pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
-                                    <button class="btn btn-outline-primary btn-lg bg-dark" onclick="window.location.href= '/pages/get-details.html?type=${type}&id=${id}';">Details</button>
+                                    <button class="btn btn-primary btn-lg" id="watchNowButton" onclick="window.location.href = '../pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
+                                    <button class="btn btn-outline-primary btn-lg bg-dark" onclick="window.location.href= '../pages/get-details.html?type=${type}&id=${id}';">Details</button>
                                 </div>
                                 <img src="${IMG_URL}${poster}" class="d-block w-100" alt="${title}-poster">
                               </div>`
@@ -215,7 +215,7 @@ function displayWatchlist() {
             const card = `
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card text-bg-dark">
-                <a href=/pages/get-details.html?type=${movie.type}&id=${movie.id}>
+                <a href=../pages/get-details.html?type=${movie.type}&id=${movie.id}>
                     <img src="${movie.posterPath}" class="card-img" alt="poster">
                     <div class="card-img-overlay position-absolute right-0">
                         <h5 class="card-title text-wrap position-absolute bottom-0">${movie.title}</h5>
@@ -313,7 +313,7 @@ async function getDetails() {
                 <span class="align-middle"><i class="bi bi-star-fill" style="color: #b159db;"></i></span>
                 <span class="m-2 align-middle">${rating}/10</span>
             </p>
-            <button class="btn btn-primary" id="watchNowButton" onclick="window.location.href = '/pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
+            <button class="btn btn-primary" id="watchNowButton" onclick="window.location.href = '../pages/watch.html?type=${type}&id=${id}';">Watch Now</button>
             <button class="btn btn-primary bg-dark d-none" id="add-to-watchlist">Add to Watchlist</button>
             <button class="btn btn-primary bg-dark d-none" id="remove-from-watchlist">Remove from Watchlist</button>
         </div>
@@ -436,7 +436,7 @@ async function displayGenre(genreId,genreName,mediaType){
         const card = `
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card text-bg-dark">
-                <a href="/pages/get-details.html?type=${type}&id=${id}">
+                <a href="../pages/get-details.html?type=${type}&id=${id}">
                     <img src="${poster}" class="card-img" alt="poster">
                     <div class="card-img-overlay position-absolute right-0">
                         <h5 class="card-title text-wrap position-absolute bottom-0">${title}</h5>
